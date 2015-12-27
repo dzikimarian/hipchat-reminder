@@ -32,4 +32,16 @@ class NotificationsController extends Controller
 		
 		return "added";
 	}
+	
+	public function hipChatWebhook()
+	{
+		$response = array(
+			'color' => 'green',
+			'message' => 'Got it!',
+			'notify' => false,
+			'mesage_format' => 'text'
+		);
+		
+		return json_encode($response);
+	}
 }
