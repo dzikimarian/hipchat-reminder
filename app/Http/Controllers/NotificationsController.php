@@ -26,6 +26,7 @@ class NotificationsController extends Controller
 		
 		$notification->message = 'test';
 		$notification->cron = '* * * * * *';
+		$notification->receiver_id = 1;
 		
 		$notification->save();
 		
