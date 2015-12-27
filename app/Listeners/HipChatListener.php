@@ -25,9 +25,9 @@ class HipChatListener
      */
     public function handle(NotifyUsers $event)
     {
-		if($event->channel!='hipchat') return true;
+		if($event->receiver->type!='HipChat') return true;
 		
-		$url = 'https://upaid.hipchat.com/v2/room/2287270/notification?auth_token=' . env('HIPCHAT_TOKEN');
+		$url = 'https://upaid.hipchat.com/v2/room/2287270/notification?auth_token=' . $event->receiver->target;
 		$config = array(
 			'color' => 'green',
 			'message' => $event->text,

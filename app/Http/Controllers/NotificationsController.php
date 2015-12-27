@@ -9,12 +9,14 @@ use App\Http\Controllers\Controller;
 use Event;
 use App\Events\NotifyUsers;
 use App\Notification;
+use App\Receiver;
 
 class NotificationsController extends Controller
 {
     public function test()
 	{
-		Event::fire(new NotifyUsers('hipchat', 'HelloWorld!'));
+		$receiver = Receiver::where('name', 'Test')->firstOrFail();
+		Event::fire(new NotifyUsers($receiver, 'HelloWorld!'));
 		return "test";
 	}
 	

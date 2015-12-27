@@ -10,18 +10,18 @@ class NotifyUsers extends Event
 {
     use SerializesModels;
 	
-	public $channel;
 	public $text;
+	public $receiver;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($channel, $text)
+    public function __construct($receiver, $text)
     {
-        $this->channel = $channel;
 		$this->text = $text;
+		$this->receiver = $receiver;
     }
 
     /**
