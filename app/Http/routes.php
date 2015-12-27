@@ -16,6 +16,7 @@ Route::get('/', function () {
 });
 
 Route::get('test', 'NotificationsController@test');
+Route::get('addNtf', 'NotificationsController@addNtf');
 
 /*
 |--------------------------------------------------------------------------

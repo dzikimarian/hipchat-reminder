@@ -6,6 +6,7 @@ use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Event;
 use App\Events\NotifyUsers;
+use App\Notification;
 
 class Kernel extends ConsoleKernel
 {
@@ -26,14 +27,12 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $tasks = array(
-			'* * * * * *' => 'Test crona'
-		);
+        $tasks = Notification::all();
 		
-		foreach($tasks as $cron => $task) {
+		foreach($tasks as $task) {
 		
-			$schedule->call(function() use ($task){ Event::fire(new NotifyUsers('hipchat', $task)); })
-                ->cron($cron);
+			$schedule->call(function() use ($task){ Event::fire(new NotifyUsers('hipchat', $task->message)); })
+                ->cron($task->cron);
 		}
     }
 }
