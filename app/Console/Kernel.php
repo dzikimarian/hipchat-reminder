@@ -4,6 +4,8 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Event;
+use App\Events\NotifyUsers;
 
 class Kernel extends ConsoleKernel
 {
@@ -24,7 +26,14 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('inspire')
-                 ->hourly();
+        $tasks = array(
+			'* * * * * *' => 'Test crona'
+		);
+		
+		foreach($tasks as $cron => $task) {
+		
+			$schedule->call(function() use ($task){ Event::fire(new NotifyUsers('hipchat', $task)); })
+                ->cron($cron);
+		}
     }
 }
