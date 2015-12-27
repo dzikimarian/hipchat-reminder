@@ -42,6 +42,6 @@ class NotificationsController extends Controller
 			'mesage_format' => 'text'
 		);
 		
-		return json_encode($response);
+		return $response;
 	}
 }
