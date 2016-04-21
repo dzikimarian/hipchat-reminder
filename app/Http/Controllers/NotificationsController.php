@@ -44,5 +44,6 @@ class NotificationsController extends Controller
 		);
 
 		return $content;
+
 	}
 }
