@@ -27,7 +27,7 @@ class HipChatListener
     {
 		if($event->receiver->type!='HipChat') return true;
 		
-		$url = 'https://upaid.hipchat.com/v2/room/2287270/notification?auth_token=' . $event->receiver->target;
+		$url = $event->receiver->target;
 		$config = array(
 			'color' => 'green',
 			'message' => $event->text,

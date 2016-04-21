@@ -10,6 +10,7 @@ use Event;
 use App\Events\NotifyUsers;
 use App\Notification;
 use App\Receiver;
+use Symfony\Component\HttpFoundation\Response;
 
 class NotificationsController extends Controller
 {
@@ -19,29 +20,29 @@ class NotificationsController extends Controller
 		Event::fire(new NotifyUsers($receiver, 'HelloWorld!'));
 		return "test";
 	}
-	
+
 	public function addNtf()
 	{
 		$notification = new Notification();
-		
+
 		$notification->message = 'test';
 		$notification->cron = '* * * * * *';
 		$notification->receiver_id = 1;
-		
+
 		$notification->save();
-		
+
 		return "added";
 	}
-	
+
 	public function hipChatWebhook()
 	{
-		$response = array(
+		$content = array(
 			'color' => 'green',
-			'message' => 'Got it!',
+			'message' => 'wat',
 			'notify' => false,
 			'mesage_format' => 'text'
 		);
-		
-		return json_encode($response);
+
+		return $content;
 	}
 }

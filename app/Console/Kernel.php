@@ -32,7 +32,7 @@ class Kernel extends ConsoleKernel
 		foreach($tasks as $task) {
 		
 			$schedule->call(function() use ($task){ Event::fire(new NotifyUsers($task->receiver, $task->message)); })
-                ->cron($task->cron);
+               ->cron($task->cron);
 		}
     }
 }
