@@ -15,6 +15,7 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         'App\Events\NotifyUsers' => [
             'App\Listeners\HipChatListener',
+            'App\Listeners\SMSListener',
         ],
     ];
 

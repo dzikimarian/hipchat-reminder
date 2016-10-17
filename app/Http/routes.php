@@ -17,7 +17,7 @@ Route::get('/', function () {
 
 Route::get('test', 'NotificationsController@test');
 // Route::get('addNtf', 'NotificationsController@addNtf');
-Route::post('api/hipchat', 'NotificationsController@hipChatWebhook');
+Route::post('api/hipchat', 'NotificationsController@hipChatSummoner');
 
 /*
 |--------------------------------------------------------------------------

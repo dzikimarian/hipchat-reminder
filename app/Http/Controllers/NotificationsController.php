@@ -5,18 +5,22 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use App\Http\Requests\HipChatRequest;
 use App\Http\Controllers\Controller;
 use Event;
 use App\Events\NotifyUsers;
 use App\Notification;
 use App\Receiver;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Collection;
+use App\Bots\Summoner;
+use Illuminate\Support\Facades\Log;
 
 class NotificationsController extends Controller
 {
     public function test()
 	{
-		$receiver = Receiver::where('name', 'Test')->firstOrFail();
+		$receiver = Receiver::where('type', 'SMS')->firstOrFail();
 		Event::fire(new NotifyUsers($receiver, 'HelloWorld!'));
 		return "test";
 	}
@@ -34,16 +38,14 @@ class NotificationsController extends Controller
 		return "added";
 	}
 
-	public function hipChatWebhook()
-	{
-		$content = array(
-			'color' => 'green',
-			'message' => 'wat',
-			'notify' => false,
-			'mesage_format' => 'text'
-		);
-
-		return $content;
-
+	public function hipChatSummoner(HipChatRequest $request, Summoner $summoner)
+	{	
+		$mentionNames = $request->getMentionNames();
+		$roomName = $request->getRoomName();
+		$senderName = $request->getSenderName();
+		
+		$response = $summoner->summonMentionedUsers($mentionNames, $roomName, $senderName);
+		
+		return $response;
 	}
 }
