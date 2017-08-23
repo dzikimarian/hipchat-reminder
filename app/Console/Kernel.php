@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\MasterPassStats;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Event;
@@ -17,6 +18,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         Commands\Inspire::class,
+        MasterPassStats::class
     ];
 
     /**
@@ -27,12 +29,22 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $tasks = Notification::all();
-		
-		foreach($tasks as $task) {
-		
-			$schedule->call(function() use ($task){ Event::fire(new NotifyUsers($task->receiver, $task->message)); })
-                ->cron($task->cron);
-		}
+
+        try {
+
+            $schedule->command('masterpass:stats')->cron('*/30 8-20 * * 1-5');
+
+            $tasks = Notification::all();
+            foreach ($tasks as $task) {
+                $schedule->call(function () use ($task) {
+                    Event::fire(new NotifyUsers($task->receiver, $task->message));
+                })
+                    ->cron($task->cron);
+
+            }
+        } catch (\Exception $e) {
+            echo __CLASS__ . PHP_EOL;
+            die($e->getMessage());
+        }
     }
 }

@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+
+#  web:
+#    build: ./
+#    volumes:
+#      - .:/var/www/html
+#      - ./000-default.conf:/etc/apache2/sites-available/000-default.conf
+#    ports:
+#      - 8080:80
+#    environment:
+#      MYSQL_ROOT_PASSWORD: secret
+#      MYSQL_DATABASE: hh
+#    links:
+#      - mysql
+#    entrypoint: sh install.sh
+#    entrypoint: ./install.sh
+
+  mysql:
+    image: mysql:5.5
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: hh
+
+
